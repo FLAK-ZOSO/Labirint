@@ -1,2 +1,2 @@
-# Labirinto
-Labirinto intelligente in C++
+# Labirint
+C++ labirint

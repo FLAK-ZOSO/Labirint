@@ -8,7 +8,7 @@ int main() {
 
     // Execute lambda asyncronously.
     auto f = std::async(std::launch::async, [] {
-        auto s = ""s;
+        int s = s;
         if (std::cin >> s) return s;
     });
 

@@ -11,7 +11,7 @@ struct Game {
     char skin; // Iniziale del giocatore, da usare come pedina
     unsigned position; // Posizione in orizzontale della pedina
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
-    unsigned bonus; // Saranno messi dei bonus ogni 5 righe, quando il contatore è a 4 si mette un bonus
+    unsigned bonus; // Saranno messi dei bonus ogni 4 righe, quando il contatore è a 3 si mette un bonus
 };
 
 
@@ -35,11 +35,23 @@ void updateMatrix(Game &game_) {
     char newLine[50];
     for (int i = 0; i < 50; i++)
         newLine[i] = ' ';
-    int cloudBeginning = rand() % 49;
-    int cloudWidth = rand() % 5;
-    int cloudEnd = cloudBeginning + cloudWidth;
-    for (int i = cloudBeginning; i < cloudEnd+1; i++)
-        newLine[i] = '*';
+    if (game_.emptyLine) {
+        game_.emptyLine = false;
+        int cloudBeginning = rand() % 49;
+        int cloudWidth = rand() % 5;
+        int cloudEnd = cloudBeginning + cloudWidth;
+        for (int i = cloudBeginning; i < cloudEnd+1; i++)
+            newLine[i] = '*';
+    } else {
+        game_.emptyLine = true;
+    }
+    if (game_.bonus == 3) {
+        game_.bonus = 0;
+        int bonus = rand() % 48;
+        newLine[bonus+1] = '$';
+    } else {
+        game_.bonus++;
+    }
     newLine[0] = '#';
     newLine[49] = '#';
     for (int i = 0; i < 50; i++)
@@ -84,7 +96,7 @@ void processMove(Game &game_, std::string input) {
 }
 
 
-bool checkMatrix(Game game_) {
+bool checkMatrix(Game &game_) {
     if (game_.matrix[4][game_.position] == '*')
         return true; // Il giocatore ha perso
     if (game_.matrix[4][game_.position] == '$')

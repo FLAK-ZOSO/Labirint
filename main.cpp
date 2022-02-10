@@ -6,6 +6,8 @@
 int game(std::string name) { // Ritorna il numero di punti
     Game myGame;
     myGame.points = 0;
+    myGame.bonus = 0;
+    myGame.emptyLine = false;
     srand(time(0));
 
     // Riempio la matrice, che in partenza è vuota
@@ -20,13 +22,11 @@ int game(std::string name) { // Ritorna il numero di punti
     myGame.name = name;
     myGame.skin = name[0];
     myGame.position = 9;
-    myGame.matrix[3][24] = myGame.skin;
-
-    // Enable standard literals as 2s and ""s.
-    using namespace std::literals;
-    
+    myGame.matrix[3][24] = myGame.skin;    
 
     while (true) {
+        // Enable standard literals as 2s and ""s.
+        using namespace std::literals;
     	// Execute lambda asyncronously.
 	    auto f = std::async(std::launch::async, [] {
 	        std::string move;
@@ -58,8 +58,8 @@ int game(std::string name) { // Ritorna il numero di punti
 
 int main() {
     // Chiediamo le varie informazioni all'utente
-    std::string name = "Asia";
-    // std::cin >> name;
+    std::string name;
+    std::cin >> name;
     // Salviamo tutti i dati in dei file .txt (di testo)
 
     while (true) {
@@ -67,4 +67,6 @@ int main() {
 
         // Chiediamo se vuole rigiocare
     }
+    
+    return 0;
 }

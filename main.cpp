@@ -28,13 +28,13 @@ int game(std::string name) { // Ritorna il numero di punti
         // Enable standard literals as 2s and ""s.
         using namespace std::literals;
     	// Execute lambda asyncronously.
-	    auto f = std::async(std::launch::async, [] {
+	    auto input = std::async(std::launch::async, [] {
 	        std::string move;
 	        if (std::cin >> move) return move;
 	    });
 	    
         // Continue execution in main thread.
-        while (f.wait_for(0.3s) != std::future_status::ready) {
+        while (input.wait_for(0.3s) != std::future_status::ready) {
             // Controlliamo se ha perso
             if (checkMatrix(myGame)) { // The user lost
                 goto end;
@@ -46,7 +46,7 @@ int game(std::string name) { // Ritorna il numero di punti
             // Aggiorniamo l'immagine
             printMatrix(myGame);
         }
-        processMove(myGame, f.get());
+        processMove(myGame, input.get());
     }
     end:
     updateMatrix(myGame);

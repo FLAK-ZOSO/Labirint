@@ -9,7 +9,7 @@ struct Game {
     unsigned points; // Punteggio del giocatore (unsigned = int ma senza i negativi)
     std::string name; // Nome del giocatore
     char skin; // Iniziale del giocatore, da usare come pedina
-    unsigned position; // Posizione in orizzontale della pedina
+    int position; // Posizione in orizzontale della pedina
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
     unsigned bonus; // Saranno messi dei bonus ogni 4 righe, quando il contatore è a 3 si mette un bonus
 };
@@ -89,10 +89,11 @@ void processMove(Game &game_, std::string input) {
     if (input == "dd" or input == "DD")
         game_.position += 2;
 
-    if (game_.position < 0)
-        game_.position = 1;
-    if (game_.position > 48)
+    // Effetto pacman
+    if (game_.position <= 0)
         game_.position = 48;
+    if (game_.position > 48)
+        game_.position = 1;
 }
 
 

@@ -12,7 +12,7 @@ struct Game {
     int x; // Posizione in orizzontale della pedina
     int y; // Posizione in verticale della pedina
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
-    unsigned bonus; // Saranno messi dei bonus ogni 4 righe, quando il contatore è a 3 si mette un bonus
+    bool bonus; // Una riga su due potrebbe contenere un bonus
 };
 
 
@@ -48,18 +48,23 @@ void updateMatrix(Game &game_) {
     } else {
         game_.emptyLine = true;
     }
-    if (game_.bonus == 3) {
-        game_.bonus = 0;
+    if (game_.bonus) {
+        game_.bonus = false;
         int bonus = rand() % 48;
         newLine[bonus+1] = '$';
     } else {
-        game_.bonus++;
+        game_.bonus = true;
     }
+    int endLeftBorder = (rand() % 5)+15;
+    int beginRightBorder = 49-(30-endLeftBorder);
+    for (int i = 1; i < endLeftBorder; i++)
+        newLine[i] = '-';
+    for (int i = beginRightBorder; i < 49; i++)
+        newLine[i] = '-';
     newLine[0] = '#';
     newLine[49] = '#';
     for (int i = 0; i < 50; i++)
     	game_.matrix[19][i] = newLine[i];
-
     game_.points++;
 }
 
@@ -92,7 +97,6 @@ void processMove(Game &game_, std::string input) {
 		game_.x -= 2;
     if (input == "dd" or input == "DD")
         game_.x += 2;
-
     // Vertical
     if (input == "a" or input == "A")
         game_.y--;
@@ -100,10 +104,12 @@ void processMove(Game &game_, std::string input) {
         game_.y++;
 
     // Effetto pacman orizzontale
+    /*
     if (game_.x <= 0)
         game_.x = 48;
     if (game_.x > 48)
         game_.x = 1;
+    */
     // Effetto pacman verticale
     if (game_.y <= 0)
         game_.y = 17;
@@ -114,6 +120,8 @@ void processMove(Game &game_, std::string input) {
 
 bool checkMatrix(Game &game_) {
     if (game_.matrix[game_.y+1][game_.x] == '*')
+        return true; // Il giocatore ha perso
+    if (game_.matrix[game_.y+1][game_.x] == '-')
         return true; // Il giocatore ha perso
     if (game_.matrix[game_.y+1][game_.x] == '$')
         game_.points += 10;

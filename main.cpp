@@ -8,7 +8,12 @@ int game(std::string name) { // Ritorna il numero di punti
     myGame.points = 0;
     myGame.bonus = 0;
     myGame.emptyLine = false;
+    myGame.borderCounter = 0;
     srand(time(0));
+
+    // Informazioni
+    std::cout << "Bonus frequency: ";
+    std::cin >> myGame.bonusFrequency;
 
     // Riempio la matrice, che in partenza è vuota
     for (int i = 0; i < 20; i++) {
@@ -52,7 +57,7 @@ int game(std::string name) { // Ritorna il numero di punti
     end:
     updateMatrix(myGame);
     printMatrix(myGame);
-    std::cout << "You lost... ";
+    std::cout << "You lost... " << std::endl;
 	return myGame.points;
 }
 
@@ -61,6 +66,7 @@ int main() {
     // Chiediamo le varie informazioni all'utente
     std::string name;
     std::cin >> name;
+
     // Salviamo tutti i dati in dei file .txt (di testo)
 
     while (true) {

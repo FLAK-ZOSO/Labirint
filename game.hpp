@@ -12,7 +12,19 @@ struct Game {
     int x; // Posizione in orizzontale della pedina
     int y; // Posizione in verticale della pedina
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
-    bool bonus; // Una riga su due potrebbe contenere un bonus
+    unsigned bonus; // Una riga su Game.bonusFrequency potrebbe contenere un bonus
+    unsigned bonusFrequency; // Frequenza dei bonus
+    unsigned borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
+};
+int borders[29] = {
+    4, 4, 4, 4, 
+    3, 3, 3, 
+    2, 2, 
+    1, 
+    2, 2, 
+    3, 3, 3, 
+    4, 4, 4, 4, 
+    5, 5, 5, 5, 5
 };
 
 
@@ -48,14 +60,14 @@ void updateMatrix(Game &game_) {
     } else {
         game_.emptyLine = true;
     }
-    if (game_.bonus) {
-        game_.bonus = false;
+    if (game_.bonus == game_.bonusFrequency) {
+        game_.bonus = 0;
         int bonus = rand() % 48;
         newLine[bonus+1] = '$';
     } else {
-        game_.bonus = true;
+        game_.bonus++;
     }
-    int endLeftBorder = (rand() % 5)+15;
+    int endLeftBorder = (borders[game_.borderCounter])+15;
     int beginRightBorder = 49-(30-endLeftBorder);
     for (int i = 1; i < endLeftBorder; i++)
         newLine[i] = '-';
@@ -65,6 +77,14 @@ void updateMatrix(Game &game_) {
     newLine[49] = '#';
     for (int i = 0; i < 50; i++)
     	game_.matrix[19][i] = newLine[i];
+    
+    // Border
+    if (game_.borderCounter == 24) {
+        game_.borderCounter = 0;
+    } else {
+        game_.borderCounter++;
+    }
+
     game_.points++;
 }
 

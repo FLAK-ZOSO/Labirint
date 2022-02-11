@@ -21,7 +21,8 @@ int game(std::string name) { // Ritorna il numero di punti
     // Il personaggio del giocatore sarà la lettera maiuscola della sua iniziale
     myGame.name = name;
     myGame.skin = name[0];
-    myGame.position = 9;
+    myGame.x = 24;
+    myGame.y = 3;
     myGame.matrix[3][24] = myGame.skin;    
 
     while (true) {

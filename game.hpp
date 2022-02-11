@@ -9,7 +9,8 @@ struct Game {
     unsigned points; // Punteggio del giocatore (unsigned = int ma senza i negativi)
     std::string name; // Nome del giocatore
     char skin; // Iniziale del giocatore, da usare come pedina
-    int position; // Posizione in orizzontale della pedina
+    int x; // Posizione in orizzontale della pedina
+    int y; // Posizione in verticale della pedina
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
     unsigned bonus; // Saranno messi dei bonus ogni 4 righe, quando il contatore è a 3 si mette un bonus
 };
@@ -24,12 +25,14 @@ void updateMatrix(Game &game_) {
 
     // Trasformiamo la pedina vecchia in uno spazio
     for (int i = 0; i < 50; i++) {
-        if (game_.matrix[2][i] == game_.skin) {
-            game_.matrix[2][i] = ' ';
-            break;
+        for (int j = 0; j < 20; j++) {
+            if (game_.matrix[j][i] == game_.skin) {
+                game_.matrix[j][i] = ' ';
+                break;
+            }
         }
     }
-    game_.matrix[3][game_.position] = game_.skin;
+    game_.matrix[game_.y][game_.x] = game_.skin;
 
     // Generiamo casualmente la nuova riga
     char newLine[50];
@@ -80,27 +83,39 @@ void printMatrix(Game game_) {
 
 
 void processMove(Game &game_, std::string input) {
+    // Horizontal
     if (input == "s" or input == "S")
-        game_.position--;
+        game_.x--;
     if (input == "d" or input == "D")
-        game_.position++;
+        game_.x++;
     if (input == "ss" or input == "SS")
-		game_.position -= 2;
+		game_.x -= 2;
     if (input == "dd" or input == "DD")
-        game_.position += 2;
+        game_.x += 2;
 
-    // Effetto pacman
-    if (game_.position <= 0)
-        game_.position = 48;
-    if (game_.position > 48)
-        game_.position = 1;
+    // Vertical
+    if (input == "a" or input == "A")
+        game_.y--;
+    if (input == "b" or input == "B")
+        game_.y++;
+
+    // Effetto pacman orizzontale
+    if (game_.x <= 0)
+        game_.x = 48;
+    if (game_.x > 48)
+        game_.x = 1;
+    // Effetto pacman verticale
+    if (game_.y <= 0)
+        game_.y = 17;
+    if (game_.y > 17)
+        game_.y = 1;
 }
 
 
 bool checkMatrix(Game &game_) {
-    if (game_.matrix[4][game_.position] == '*')
+    if (game_.matrix[game_.y+1][game_.x] == '*')
         return true; // Il giocatore ha perso
-    if (game_.matrix[4][game_.position] == '$')
+    if (game_.matrix[game_.y+1][game_.x] == '$')
         game_.points += 10;
     return false;
 }

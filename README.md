@@ -1,2 +1,0 @@
-# Labirint
-C++ labirint

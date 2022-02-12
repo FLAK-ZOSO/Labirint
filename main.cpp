@@ -18,6 +18,17 @@ int game(std::string name) { // Ritorna il numero di punti
     std::cin >> myGame.maxCloudWidth;
     if (myGame.maxCloudWidth > 10)
         myGame.maxCloudWidth = 10;
+    
+    // Colore
+    std::string color;
+    std::cout << "Color: ";
+    std::cin >> color;
+    if (color == "matrix")
+        system("color 0A");
+    if (color == "red")
+        system("color 0C");
+    if (color == "fucsia")
+        system("color DE");
 
     // Riempio la matrice, che in partenza è vuota
     for (int i = 0; i < 20; i++) {

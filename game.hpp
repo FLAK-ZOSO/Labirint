@@ -17,7 +17,7 @@ struct Game {
     unsigned bonusFrequency; // Frequenza dei bonus
     unsigned borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
 };
-int borders[30] = {
+unsigned borders[30] = {
     5, 5,
     4, 4, 4,
     3, 3, 3, 3,

@@ -149,3 +149,20 @@ bool checkMatrix(Game &game_) {
         game_.points += 10;
     return false;
 }
+
+
+bool newGame() {
+    char answer;
+    std::cout << "Play again? (y/n)" << std::endl << ">";
+    std::cin >> answer;
+
+    switch (answer) {
+        case 'y': case 'Y':
+            return true;
+        case 'n': case 'N':
+            return false;
+        default:
+            std::cout << "Invalid input" << std::endl;
+            return false;
+    }
+}

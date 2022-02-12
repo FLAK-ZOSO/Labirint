@@ -79,6 +79,7 @@ int main() {
         int points = game(name);
 
         // Chiediamo se vuole rigiocare
+        if (!newGame()) break;
     }
     
     return 0;

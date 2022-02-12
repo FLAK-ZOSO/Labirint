@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdlib>
 #include "time.h"
-#include "cleanScreen.hpp"
 
 
 struct Game {

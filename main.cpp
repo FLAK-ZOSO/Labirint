@@ -34,6 +34,7 @@ int game(std::string name) { // Ritorna il numero di punti
     myGame.y = 3;
     myGame.matrix[3][24] = myGame.skin;    
 
+    bool end = false;
     while (true) {
         // Enable standard literals as 2s and ""s.
         using namespace std::literals;
@@ -47,7 +48,8 @@ int game(std::string name) { // Ritorna il numero di punti
         while (input.wait_for(0.3s) != std::future_status::ready) {
             // Controlliamo se ha perso
             if (checkMatrix(myGame)) { // The user lost
-                goto end;
+                end = true;
+                break;
             }
             
             // Aggiorniamo la matrice
@@ -57,8 +59,8 @@ int game(std::string name) { // Ritorna il numero di punti
             printMatrix(myGame);
         }
         processMove(myGame, input.get());
+        if (end) break;
     }
-    end:
     updateMatrix(myGame);
     printMatrix(myGame);
     std::cout << "You lost... " << std::endl;

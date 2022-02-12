@@ -12,6 +12,7 @@ struct Game {
     int x; // Posizione in orizzontale della pedina
     int y; // Posizione in verticale della pedina
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
+    unsigned maxCloudWidth; // Massima larghezza delle nuvole
     unsigned bonus; // Una riga su Game.bonusFrequency potrebbe contenere un bonus
     unsigned bonusFrequency; // Frequenza dei bonus
     unsigned borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
@@ -53,7 +54,7 @@ void updateMatrix(Game &game_) {
     if (game_.emptyLine) {
         game_.emptyLine = false;
         int cloudBeginning = rand() % 49;
-        int cloudWidth = rand() % 5;
+        int cloudWidth = rand() % game_.maxCloudWidth;
         int cloudEnd = cloudBeginning + cloudWidth;
         for (int i = cloudBeginning; i < cloudEnd+1; i++)
             newLine[i] = '*';

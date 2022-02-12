@@ -14,6 +14,10 @@ int game(std::string name) { // Ritorna il numero di punti
     // Informazioni
     std::cout << "Bonus frequency: ";
     std::cin >> myGame.bonusFrequency;
+    std::cout << "Cloud max width: ";
+    std::cin >> myGame.maxCloudWidth;
+    if (myGame.maxCloudWidth > 10)
+        myGame.maxCloudWidth = 10;
 
     // Riempio la matrice, che in partenza è vuota
     for (int i = 0; i < 20; i++) {

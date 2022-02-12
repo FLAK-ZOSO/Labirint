@@ -17,15 +17,19 @@ struct Game {
     unsigned bonusFrequency; // Frequenza dei bonus
     unsigned borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
 };
-int borders[16] = {
-    4, 4,
-    3, 3, 3, 
-    2, 2, 
-    1, 
-    2, 2, 
-    3, 3, 3, 
-    4, 4,
-    5
+int borders[30] = {
+    5, 5,
+    4, 4, 4,
+    3, 3, 3, 3,
+    2, 2, 2,
+    1, 1,
+    0,
+    1, 1,
+    2, 2, 2,
+    3, 3, 3, 3,
+    4, 4, 4,
+    5, 5,
+    6
 };
 
 
@@ -80,7 +84,7 @@ void updateMatrix(Game &game_) {
     	game_.matrix[19][i] = newLine[i];
     
     // Border
-    if (game_.borderCounter == 15) {
+    if (game_.borderCounter == 29) {
         game_.borderCounter = 0;
     } else {
         game_.borderCounter++;

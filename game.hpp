@@ -12,19 +12,29 @@ struct Game {
     int x; // Posizione in orizzontale della pedina
     int y; // Posizione in verticale della pedina
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
+    unsigned maxCloudWidth; // Massima larghezza delle nuvole
     unsigned bonus; // Una riga su Game.bonusFrequency potrebbe contenere un bonus
     unsigned bonusFrequency; // Frequenza dei bonus
     unsigned borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
 };
-int borders[16] = {
-    4, 4,
-    3, 3, 3, 
-    2, 2, 
-    1, 
-    2, 2, 
-    3, 3, 3, 
-    4, 4,
-    5
+const int bordersLen = 48;
+unsigned borders[bordersLen] = {
+    7, 7,
+    6, 6, 6,
+    5, 5, 5, 5,
+    4, 4, 4, 4, 4,
+    3, 3, 3, 3,
+    2, 2, 2,
+    1, 1,
+    0,
+    1, 1,
+    2, 2, 2,
+    3, 3, 3, 3,
+    4, 4, 4, 4, 4,
+    5, 5, 5, 5,
+    6, 6, 6,
+    7, 7,
+    8
 };
 
 
@@ -52,8 +62,8 @@ void updateMatrix(Game &game_) {
         newLine[i] = ' ';
     if (game_.emptyLine) {
         game_.emptyLine = false;
-        int cloudBeginning = rand() % 49;
-        int cloudWidth = rand() % 5;
+        int cloudBeginning = (rand() % (34-(borders[game_.borderCounter]))) + 15 + (borders[game_.borderCounter]);
+        int cloudWidth = rand() % game_.maxCloudWidth;
         int cloudEnd = cloudBeginning + cloudWidth;
         for (int i = cloudBeginning; i < cloudEnd+1; i++)
             newLine[i] = '*';
@@ -62,8 +72,8 @@ void updateMatrix(Game &game_) {
     }
     if (game_.bonus == game_.bonusFrequency) {
         game_.bonus = 0;
-        int bonus = rand() % 48;
-        newLine[bonus+1] = '$';
+        int bonus = rand() % 34 + 15; // Bonus in quelle posizioni (0-15) sarebbero comunque coperti dai bordi
+        newLine[bonus] = '$';
     } else {
         game_.bonus++;
     }
@@ -79,7 +89,7 @@ void updateMatrix(Game &game_) {
     	game_.matrix[19][i] = newLine[i];
     
     // Border
-    if (game_.borderCounter == 15) {
+    if (game_.borderCounter == bordersLen-1) {
         game_.borderCounter = 0;
     } else {
         game_.borderCounter++;
@@ -123,13 +133,6 @@ void processMove(Game &game_, std::string input) {
     if (input == "b" or input == "B")
         game_.y++;
 
-    // Effetto pacman orizzontale
-    /*
-    if (game_.x <= 0)
-        game_.x = 48;
-    if (game_.x > 48)
-        game_.x = 1;
-    */
     // Effetto pacman verticale
     if (game_.y <= 0)
         game_.y = 17;

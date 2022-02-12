@@ -62,7 +62,7 @@ void updateMatrix(Game &game_) {
         newLine[i] = ' ';
     if (game_.emptyLine) {
         game_.emptyLine = false;
-        int cloudBeginning = rand() % 49;
+        int cloudBeginning = (rand() % (34-(borders[game_.borderCounter]))) + 15 + (borders[game_.borderCounter]);
         int cloudWidth = rand() % game_.maxCloudWidth;
         int cloudEnd = cloudBeginning + cloudWidth;
         for (int i = cloudBeginning; i < cloudEnd+1; i++)
@@ -72,8 +72,8 @@ void updateMatrix(Game &game_) {
     }
     if (game_.bonus == game_.bonusFrequency) {
         game_.bonus = 0;
-        int bonus = rand() % 48;
-        newLine[bonus+1] = '$';
+        int bonus = rand() % 34 + 15; // Bonus in quelle posizioni (0-15) sarebbero comunque coperti dai bordi
+        newLine[bonus] = '$';
     } else {
         game_.bonus++;
     }

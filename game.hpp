@@ -17,9 +17,12 @@ struct Game {
     unsigned bonusFrequency; // Frequenza dei bonus
     unsigned borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
 };
-unsigned borders[30] = {
-    5, 5,
-    4, 4, 4,
+const int bordersLen = 48;
+unsigned borders[bordersLen] = {
+    7, 7,
+    6, 6, 6,
+    5, 5, 5, 5,
+    4, 4, 4, 4, 4,
     3, 3, 3, 3,
     2, 2, 2,
     1, 1,
@@ -27,9 +30,11 @@ unsigned borders[30] = {
     1, 1,
     2, 2, 2,
     3, 3, 3, 3,
-    4, 4, 4,
-    5, 5,
-    6
+    4, 4, 4, 4, 4,
+    5, 5, 5, 5,
+    6, 6, 6,
+    7, 7,
+    8
 };
 
 
@@ -84,7 +89,7 @@ void updateMatrix(Game &game_) {
     	game_.matrix[19][i] = newLine[i];
     
     // Border
-    if (game_.borderCounter == 29) {
+    if (game_.borderCounter == bordersLen-1) {
         game_.borderCounter = 0;
     } else {
         game_.borderCounter++;
@@ -128,13 +133,6 @@ void processMove(Game &game_, std::string input) {
     if (input == "b" or input == "B")
         game_.y++;
 
-    // Effetto pacman orizzontale
-    /*
-    if (game_.x <= 0)
-        game_.x = 48;
-    if (game_.x > 48)
-        game_.x = 1;
-    */
     // Effetto pacman verticale
     if (game_.y <= 0)
         game_.y = 17;

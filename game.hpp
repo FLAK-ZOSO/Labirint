@@ -112,7 +112,7 @@ void printMatrix(Game game_) {
     }
     for (int i = 0; i < 50; i++)
         std::cout << '#';
-    std::cout << std::endl << game_.points << std::endl;
+    std::cout << std::endl << game_.points* (game_.bonusFrequency+1) * game_.maxCloudWidth << std::endl;
 }
 
 

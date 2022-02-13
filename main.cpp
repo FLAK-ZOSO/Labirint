@@ -74,8 +74,7 @@ int game(std::string name) { // Ritorna il numero di punti
     }
     updateMatrix(myGame);
     printMatrix(myGame);
-    std::cout << "You lost... " << std::endl;
-	return myGame.points;
+	return myGame.points * (myGame.bonusFrequency+1) * myGame.maxCloudWidth;
 }
 
 
@@ -88,6 +87,9 @@ int main() {
 
     while (true) {
         int points = game(name);
+        std::cout << points << " points" << std::endl;
+
+        // Salviamo questi dati nel file di testo
 
         // Chiediamo se vuole rigiocare
         if (!newGame()) break;

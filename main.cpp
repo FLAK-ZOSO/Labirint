@@ -3,7 +3,7 @@
 #include "game.hpp"
 
 
-int game(std::string name) { // Ritorna il numero di punti
+Game game(std::string name) { // Ritorna l'oggetto Game
     Game myGame;
     myGame.points = 0;
     myGame.bonus = 0;
@@ -74,7 +74,7 @@ int game(std::string name) { // Ritorna il numero di punti
     }
     updateMatrix(myGame);
     printMatrix(myGame);
-	return myGame.points * (myGame.bonusFrequency+1) * myGame.maxCloudWidth;
+	return myGame;
 }
 
 
@@ -86,8 +86,12 @@ int main() {
     // Salviamo tutti i dati in dei file .txt (di testo)
 
     while (true) {
-        int points = game(name);
-        std::cout << points << " points" << std::endl;
+        Game game_ = game(name);
+        system("cls");
+        std::cout << "Points: " << game_.points << std::endl;
+        std::cout << "Difficulty multiplier: " <<  (game_.bonusFrequency+1) * game_.maxCloudWidth << std::endl;
+        std::cout << "Score: " << game_.points * (game_.bonusFrequency+1) * game_.maxCloudWidth;
+        std::cout << std::endl << std::endl;
 
         // Salviamo questi dati nel file di testo
 

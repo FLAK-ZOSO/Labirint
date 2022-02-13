@@ -1,6 +1,8 @@
 #include <future>
 #include <thread>
 #include <limits>
+#include <fstream>
+#include <filesystem>
 #include "game.hpp"
 
 
@@ -94,16 +96,55 @@ int main() {
     std::cin >> name;
 
     // Salviamo tutti i dati in dei file .txt (di testo)
+    if (std::filesystem::exists(name+".txt")) {
+        std::ifstream file;
+        std::string path = name.append(".txt");
+        file = open(path);
+        std::cout << "Welcome back " << name;
+        std::string line;
+        getline(file, line);
+        std::cout << "Your record is " << line;
+        file.close();
+    } else {
+        std::cout << "Welcome " << name << std::endl;
+        std::cout << "Do you want to create an account? (y/n)" << std::endl;
+        std::cout << ">";
+        char answer;
+        std::cin >> answer;
+        if (answer == 'y') {
+            std::ofstream outfile(name+".txt");
+            outfile.close();
+        }
+    }
+
 
     while (true) {
         Game game_ = game(name);
         system("cls");
         std::cout << "Points: " << game_.points << std::endl;
         std::cout << "Difficulty multiplier: " <<  (game_.bonusFrequency+1) * game_.maxCloudWidth << std::endl;
-        std::cout << "Score: " << game_.points * (game_.bonusFrequency+1) * game_.maxCloudWidth;
+        int score = game_.points * (game_.bonusFrequency+1) * game_.maxCloudWidth;
+        std::cout << "Score: " << score;
         std::cout << std::endl << std::endl;
 
         // Salviamo questi dati nel file di testo
+        if (std::filesystem::exists(name+".txt")) {
+            ifstream file;
+            file = open(name+".txt");
+            std::string line;
+            getline(file, line);
+            int record = std::stoi(line);
+            file.close();
+            if (score > record) {
+                ofstream file;
+                file = open(name+".txt");
+                file << score;
+                file.close();
+            }
+            std::cout << "Your record is " << line;
+        } else {
+            std::cout << "Your data weren\'t save because you don\'t have an account" << std::endl;
+        }
 
         // Chiediamo se vuole rigiocare
         if (!newGame()) break;

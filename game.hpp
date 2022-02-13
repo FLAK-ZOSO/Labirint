@@ -13,7 +13,7 @@ struct Game {
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
     unsigned maxCloudWidth; // Massima larghezza delle nuvole
     unsigned bonus; // Una riga su Game.bonusFrequency potrebbe contenere un bonus
-    unsigned bonusFrequency; // Frequenza dei bonus
+    unsigned bonusFrequency; // Ogni quante righe appare un bonus
     unsigned borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
 };
 const int bordersLen = 48;

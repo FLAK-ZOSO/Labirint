@@ -1,5 +1,6 @@
 #include <future>
 #include <thread>
+#include <limits>
 #include "game.hpp"
 
 
@@ -12,13 +13,21 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     srand(time(0));
 
     // Informazioni
-    std::cout << "Bonus frequency: ";
-    std::cin >> myGame.bonusFrequency;
-    std::cout << "Cloud max width: ";
-    std::cin >> myGame.maxCloudWidth;
+    while ((std::cout << "Bonus frequency (period): ") && (!(std::cin >> myGame.bonusFrequency))) {
+        std::cout << "Not a positive number" << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+    while ((std::cout << "Cloud max width: ") && (!(std::cin >> myGame.maxCloudWidth))) {
+        std::cout << "Not a positive number" << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+    if (myGame.bonusFrequency > 10)
+        myGame.bonusFrequency = 10;
     if (myGame.maxCloudWidth > 10)
         myGame.maxCloudWidth = 10;
-    
+
     // Colore
     std::string color;
     std::cout << "Color: ";
@@ -81,6 +90,7 @@ Game game(std::string name) { // Ritorna l'oggetto Game
 int main() {
     // Chiediamo le varie informazioni all'utente
     std::string name;
+    std::cout << "Username: ";
     std::cin >> name;
 
     // Salviamo tutti i dati in dei file .txt (di testo)
@@ -98,6 +108,7 @@ int main() {
         // Chiediamo se vuole rigiocare
         if (!newGame()) break;
     }
+    // Menu principale
     
     return 0;
 }

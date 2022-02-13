@@ -1,6 +1,7 @@
 #include <future>
 #include <thread>
 #include <limits>
+#include <conio.h>
 #include "game.hpp"
 
 
@@ -61,7 +62,23 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     	// Execute lambda asyncronously.
 	    auto input = std::async(std::launch::async, [] {
 	        std::string move;
-	        if (std::cin >> move) return move;
+	        // if (std::cin >> move) return move;
+            while (true) {
+                if (kbhit()) {
+                    int b = getch();
+                    switch (b) {
+                        case 77:
+                            move = "d";
+                        case 72:
+                            move = "a";
+                        case 80:
+                            move = "b";
+                        case 75:
+                            move = "s";
+                    }
+                    return move;
+                }
+            }
 	    });
 	    
         // Continue execution in main thread.

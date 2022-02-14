@@ -10,6 +10,7 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     myGame.bonus = 0;
     myGame.emptyLine = false;
     myGame.borderCounter = 0;
+    myGame.z = true;
     srand(time(0));
 
     // Informazioni

@@ -5,11 +5,12 @@
 
 struct Game {
     char matrix[20][50]; // Il campo di gioco
-    unsigned points; // Punteggio del giocatore (unsigned = int ma senza i negativi)
+    int points; // Punteggio del giocatore
     std::string name; // Nome del giocatore
     char skin; // Iniziale del giocatore, da usare come pedina
     int x; // Posizione in orizzontale della pedina
     int y; // Posizione in verticale della pedina
+    bool z; // Posizione 3D della pedina, che ha solo due valori, true è il default
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
     unsigned maxCloudWidth; // Massima larghezza delle nuvole
     unsigned bonus; // Una riga su Game.bonusFrequency potrebbe contenere un bonus
@@ -94,7 +95,11 @@ void updateMatrix(Game &game_) {
         game_.borderCounter++;
     }
 
-    game_.points++;
+    if (game_.z) {
+        game_.points++;
+    } else {
+        game_.points--;
+    }
 }
 
 
@@ -113,6 +118,7 @@ void printMatrix(Game game_) {
     for (int i = 0; i < 50; i++)
         std::cout << '#';
     std::cout << std::endl << game_.points << std::endl;
+    std::cout << "X=" << game_.x << " Y=" << game_.y << " Z=" << game_.z << std::endl;
 }
 
 
@@ -131,6 +137,9 @@ void processMove(Game &game_, std::string input) {
         game_.y--;
     if (input == "b" or input == "B")
         game_.y++;
+    // 3D
+    if (input == "z" or input == "Z")
+        game_.z = not game_.z;
 
     // Effetto pacman verticale
     if (game_.y <= 0)
@@ -141,10 +150,12 @@ void processMove(Game &game_, std::string input) {
 
 
 bool checkMatrix(Game &game_) {
-    if (game_.matrix[game_.y+1][game_.x] == '*')
-        return true; // Il giocatore ha perso
+    if (game_.z) { // Se è sul piano di sotto
+        if (game_.matrix[game_.y+1][game_.x] == '*')
+            return true; // Il giocatore ha perso
+    }
     if (game_.matrix[game_.y+1][game_.x] == '-')
-        return true; // Il giocatore ha perso
+            return true; // Il giocatore ha perso
     if (game_.matrix[game_.y+1][game_.x] == '$')
         game_.points += 10;
     return false;

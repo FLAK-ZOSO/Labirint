@@ -26,10 +26,19 @@ Game game(std::string name) { // Ritorna l'oggetto Game
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
+    long double frame_duration_;
+    while ((std::cout << "Duration of a frame: ") && (!(std::cin >> frame_duration_))) {
+        std::cout << "Not a positive number" << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
     if (myGame.bonusFrequency > 10)
         myGame.bonusFrequency = 10;
     if (myGame.maxCloudWidth > 15)
         myGame.maxCloudWidth = 15;
+    if (frame_duration_ < 0.05)
+        frame_duration_ = 0.05;
+    auto frame_duration = std::chrono::duration<long double>(frame_duration_);
 
     // Colore
     std::string color;
@@ -68,7 +77,7 @@ Game game(std::string name) { // Ritorna l'oggetto Game
 	    });
 	    
         // Continue execution in main thread.
-        while (input.wait_for(0.3s) != std::future_status::ready) {
+        while (input.wait_for(frame_duration) != std::future_status::ready) {
             // Controlliamo se ha perso
             if (checkMatrix(myGame)) { // The user lost
                 end = true;

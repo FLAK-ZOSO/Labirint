@@ -4,6 +4,12 @@
 #include "game.hpp"
 
 
+std::string inputMove() {
+	std::string move;
+	if (std::cin >> move) return move;
+}
+
+
 Game game(std::string name) { // Ritorna l'oggetto Game
     Game myGame;
     myGame.points = 0;
@@ -38,7 +44,7 @@ Game game(std::string name) { // Ritorna l'oggetto Game
         myGame.maxCloudWidth = 15;
     if (frame_duration_ < 0.05)
         frame_duration_ = 0.05;
-    auto frame_duration = std::chrono::duration<long double>(frame_duration_);
+    auto frame_duration = std::chrono::duration<long double> (frame_duration_);
 
     // Colore
     std::string color;
@@ -70,11 +76,8 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     while (true) {
         // Enable standard literals as 2s and ""s.
         using namespace std::literals;
-    	// Execute lambda asyncronously.
-	    auto input = std::async(std::launch::async, [] {
-	        std::string move;
-	        if (std::cin >> move) return move;
-	    });
+    	// Eseguo la funzione inputMove in modo asincrono
+	    auto input = std::async(std::launch::async, inputMove);
 	    
         // Continue execution in main thread.
         while (input.wait_for(frame_duration) != std::future_status::ready) {

@@ -162,10 +162,10 @@ void processMove(Game &game_, std::string input) {
     }
 
     // Effetto pacman verticale
-    if (game_.y <= 0)
+    if (game_.y < 0)
         game_.y = 17;
     if (game_.y > 17)
-        game_.y = 1;
+        game_.y = 0;
 }
 
 

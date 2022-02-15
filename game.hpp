@@ -11,6 +11,8 @@ struct Game {
     int x; // Posizione in orizzontale della pedina
     int y; // Posizione in verticale della pedina
     bool z; // Posizione 3D della pedina, che ha solo due valori, true è il default
+    unsigned zFrames; // Quanti frame può ancora passare con l'immunità
+    unsigned zFuel; // Quante volte può ancora usare Z
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
     unsigned maxCloudWidth; // Massima larghezza delle nuvole
     unsigned bonus; // Una riga su Game.bonusFrequency potrebbe contenere un bonus
@@ -77,6 +79,8 @@ void updateMatrix(Game &game_) {
     } else {
         game_.bonus++;
     }
+    if (rand()%15 == 0) // Una volta su 15 può capitare un "carburante z", il cui nome fa schifo ma shh
+        newLine[rand()%34 + 15] = '@';
     int endLeftBorder = (borders[game_.borderCounter])+15;
     int beginRightBorder = 49-(30-endLeftBorder);
     for (int i = 1; i < endLeftBorder; i++)
@@ -99,6 +103,10 @@ void updateMatrix(Game &game_) {
         game_.points++;
     } else {
         game_.points--;
+        if (game_.zFrames > 0)
+            game_.zFrames--;
+        else
+            game_.z = true;
     }
 }
 
@@ -119,6 +127,9 @@ void printMatrix(Game game_) {
         std::cout << '#';
     std::cout << std::endl << game_.points << std::endl;
     std::cout << "X=" << game_.x << " Y=" << game_.y << " Z=" << game_.z << std::endl;
+    std::cout << "Z Fuel: " << game_.zFuel << std::endl;
+    if (not game_.z)
+        std::cout << "Z Frames: " << game_.zFrames << std::endl;
 }
 
 
@@ -138,8 +149,17 @@ void processMove(Game &game_, std::string input) {
     if (input == "b" or input == "B")
         game_.y++;
     // 3D
-    if (input == "z" or input == "Z")
-        game_.z = not game_.z;
+    if (input == "z" or input == "Z") {
+        if (game_.z) {
+            if (game_.zFuel > 0) {
+                game_.z = false;
+                game_.zFuel--;
+                game_.zFrames = 10;
+            }
+        } else {
+            game_.z = true;
+        }
+    }
 
     // Effetto pacman verticale
     if (game_.y <= 0)
@@ -150,7 +170,7 @@ void processMove(Game &game_, std::string input) {
 
 
 bool checkMatrix(Game &game_) {
-    if (game_.z) { // Se è sul piano di sotto
+    if (game_.z) { // Se è sul piano di sopra
         if (game_.matrix[game_.y+1][game_.x] == '*')
             return true; // Il giocatore ha perso
     }
@@ -158,6 +178,9 @@ bool checkMatrix(Game &game_) {
             return true; // Il giocatore ha perso
     if (game_.matrix[game_.y+1][game_.x] == '$')
         game_.points += 10;
+    if (game_.matrix[game_.y+1][game_.x] == '@') {
+        game_.zFuel++;
+    }
     return false;
 }
 

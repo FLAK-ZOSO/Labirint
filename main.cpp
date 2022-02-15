@@ -10,7 +10,9 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     myGame.bonus = 0;
     myGame.emptyLine = false;
     myGame.borderCounter = 0;
-    myGame.z = true;
+    myGame.z = true; // true quando è il default
+    myGame.zFrames = 0;
+    myGame.zFuel = 0;
     srand(time(0));
 
     // Informazioni
@@ -26,8 +28,8 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     }
     if (myGame.bonusFrequency > 10)
         myGame.bonusFrequency = 10;
-    if (myGame.maxCloudWidth > 10)
-        myGame.maxCloudWidth = 10;
+    if (myGame.maxCloudWidth > 15)
+        myGame.maxCloudWidth = 15;
 
     // Colore
     std::string color;

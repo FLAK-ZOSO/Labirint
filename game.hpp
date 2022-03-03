@@ -61,6 +61,17 @@ void processMove(Game &game_, std::string mossa)
 }
 
 
-bool checkMatrix(Game &game_) {
-    
+// Return true se hai colpito una nuvola ('*'), altrimenti return false
+bool checkMatrix(Game &game_) 
+{
+    /*
+    ########
+    #   A  # -> matrix[3][game_.position]
+    #   *  # -> matrix[4][game_.position]
+    #      #
+    ########
+    */
+    if(matrix[4][game_.position]=='*')
+        return true;
+    return false;
 }

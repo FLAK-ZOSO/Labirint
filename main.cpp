@@ -29,7 +29,7 @@ int game(std::string name) { // Ritorna il numero di punti
         using namespace std::literals;
     	// Esegue la funzione in modo asincrono
 	    auto input = std::async(std::launch::async, [] {
-	        std::string move;
+	        char move;
 	        if (std::cin >> move) 
                 return move;
 	    });

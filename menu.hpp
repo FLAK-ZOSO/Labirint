@@ -45,13 +45,24 @@ void stampaDati() {
 }
 
 
-void scriviDati(string username) 
+void scriviDati(string username, int punteggio) 
 {
     // Apro il file utenti.txt e inserisco in mezzo l'utente SE ha fatto un punteggio da classifica
-    
-    // Tesoro... guarda che prima devi leggere il contenuto, altrimenti cancelli tutto scrivendo nel file...
 
-    
+    string classifica[10][2];
+
+    ifstream fin;
+    fin.open("utenti.txt", ios::in);
+
+    for(int j=0;j<10;j++) {
+        fin >> classifica[j][0];
+        fin >> classifica[j][1];
+    }
+    if (/*Il punteggio non è da top-10*/)
+        return; // Se il punteggio non è da top 10 allora finisci la funzione perché il file non va modificato
+
+
+    // Poi la ristampi nel file
     ofstream fout;
 	fout.open("utenti.txt", ios::out);
 
@@ -60,19 +71,38 @@ void scriviDati(string username)
 		for(int i=0;i<10;i++)
         {       
             if(classifica[i][1]<punteggio)
-        {
+                {
                  classifica[i][1]=punteggio;
                 for(int f=i+1;f<10;f++)
                 classifica[i][1]=classifica[i+1][1];
                                 
-        } // Eh già 😐
+                } // Eh già 😐
+                
 	}
+        
 	fout.close();
 }
 
 
 int leggiRecord(string username) {
     // Se è già registrato fai return del suo record
+ifstream fin;
+    fin.open("utenti.txt", ios::in);
+    if (fout)
+	{
+		for(int i=0;i<10;i++)
+        {       
+            if(classifica[i][0]==personaggio)
+                { if(classifica[i][1]<punteggio)
+                 classifica[i][1]=punteggio;          
+                } 
+                
+	}
+        else 
+        return 0;
+        
+        
+	fout.close();
 
     // Se non è ancora registrato fai return 0
 }

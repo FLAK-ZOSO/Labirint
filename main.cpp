@@ -84,7 +84,7 @@ int main() {
         int points = game(name);
 
         // Salva i dati nel file utenti.txt
-        scriviDati(name);
+        scriviDati(name, points);
 
         // Chiediamo se vuole rigiocare
     }

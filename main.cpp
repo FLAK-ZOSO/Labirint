@@ -67,13 +67,18 @@ int main() {
     system("pause"); // Mette in pausa l'esecuzione finché l'utente non preme invio
     system("cls"); // Pulisce lo schermo
 
+    // Elaboriamo tutti i dati con dei file .txt (di testo)
+    stampaDati();
+    system("pause");
+    system("cls");
+
     // Chiediamo le varie informazioni all'utente
     std::string name;
     std::cout << "Username: ";
     std::cin >> name;
-    
-    // Elaboriamo tutti i dati con dei file .txt (di testo)
-    int record = leggiDati(name);
+
+    // Leggi record se c'è
+    int record = leggiRecord(name);
 
     while (true) {
         int points = game(name);

@@ -1,6 +1,7 @@
 #include <future>
 #include <thread>
 #include "game.hpp"
+#include "menu.hpp"
 
 
 int game(std::string name) { // Ritorna il numero di punti
@@ -61,13 +62,24 @@ int game(std::string name) { // Ritorna il numero di punti
 
 
 int main() {
+    // Stampiamo il menu con una funzione che viene da menu.hpp
+    stampaScrittaMenu();
+    system("pause"); // Mette in pausa l'esecuzione finché l'utente non preme invio
+    system("cls"); // Pulisce lo schermo
+
     // Chiediamo le varie informazioni all'utente
     std::string name;
+    std::cout << "Username: ";
     std::cin >> name;
-    // Salviamo tutti i dati in dei file .txt (di testo)
+    
+    // Elaboriamo tutti i dati con dei file .txt (di testo)
+    int record = leggiDati(name);
 
     while (true) {
         int points = game(name);
+
+        // Salva i dati nel file utenti.txt
+        scriviDati(name);
 
         // Chiediamo se vuole rigiocare
     }

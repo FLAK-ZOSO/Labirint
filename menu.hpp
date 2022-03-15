@@ -1,31 +1,35 @@
-int main()
-{
-        ifstream fin;
-        string testo;
-        int numero;
-        int arr[20];
-        int conta=0;
-        
-        fin.open ("prova.txt", ios::in);
-        //se apertura file va a buon fine fin è diverso da zero
-        
-        if (fin!=0)
-        {
-                //getline restituisce zero quando trova EOF (end of file)
-                while (getline (fin, testo)!=0) 
-                {
-                          arr[conta]=stoi(testo);
-                          conta++;
-                }
-                
-                for (int i=0;i<conta;i++)
-                        cout << arr[i] << endl;
-                
-                //getline(fin,testo);
-                //cout << testo;
-        }
-        else
-                cout << "errore apertura file prova.txt" << endl;
-        
-        fin.close();
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+
+void stampaScrittaMenu() {
+    ifstream fin;
+    fin.open("menu.txt", ios::in);
+    string testo;
+    
+    if (fin) {
+        while (getline(fin, testo))
+            cout << testo << endl;
+    } else
+        cout << "errore apertura file prova.txt" << endl;
+    
+    fin.close();
+}
+
+
+int leggiDati(string username) {
+    // Leggi il file di testo che chiamiamo utenti.txt
+    
+
+    // Controlli se nel file è già registrato il nome utente dell'utente (username)
+
+    // Se è già registrato fai return del suo record
+
+    // Se non è ancora registrato fai return 0
+}
+
+
+void scriviDati(string username) {
+
 }

@@ -5,11 +5,12 @@ using namespace std;
 
 
 void stampaScrittaMenu() {
-    cout << "||||  |||| |||||| |||||   ||| |||    |||" << endl;
-    cout << "|||||||||| |||    ||||||  ||| |||    |||" << endl;
-    cout << "||| || ||| |||||| ||| ||| ||| |||    |||" << endl;
-    cout << "|||    ||| |||    |||  |||||| |||    |||" << endl;
-    cout << "|||    ||| |||||| |||   ||||| ||||||||||" << endl;
+    cout << "LLL             AAAAAA      BBBBBBBBB   IIIII  RRRRRRRRR   IIIII  NNNNNN    NNN TTTTTTTTTTT  " << endl;
+    cout << "LLL            AAA  AAA     BBB    BBB   III   RRR    RRR   III   NNN NNN   NNN     TTT      " << endl;
+    cout << "LLL           AAA    AAA    BBBBBBBBB    III   RRRRRRRRR    III   NNN  NNN  NNN     TTT      " << endl;
+    cout << "LLL          AAAAAAAAAAAA   BBB    BBB   III   RRR RRR      III   NNN   NNN NNN     TTT      " << endl;
+    cout << "LLLLLLLLLL  AAA        AAA  BBBBBBBBB   IIIII  RRR  RRRR   IIIII  NNN    NNNNNN     TTT      " << endl;
+    cout << "\n                                   By FLAK-ZOSO & AsiaMarcheluzzo" << endl;
 }
 
 

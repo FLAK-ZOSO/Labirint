@@ -89,36 +89,36 @@ void scriviDati(string username, int punteggio)
 
 	if (fout)
 	{
-		for(int i=0;i<10;i++)
-        {       
-            if(classifica[i][1]<punteggio)
+		for (int i=0; i<10; i++)
+        {
+            if (stoi(classifica[i][1])<punteggio)
             {
-                classifica[i][1]=punteggio;
-                for(int f=i+1;f<10;f++)
-                    classifica[i][1]=classifica[i+1][1];               
+                classifica[i][1]=to_string(punteggio);
+                for (int f=i+1; f<9; f++)
+                    classifica[i+1][1]=classifica[i][1];               
             } // Eh già 😐
-        }    
+        }
 	}
-        
+
 	fout.close();
 }
 
 
 int leggiRecord(string username) {
     // Se è già registrato fai return del suo record
-ifstream fin;
+    ifstream fin;
     fin.open("utenti.txt", ios::in);
-    if (fout)
+    if (fin)
 	{
-		for(int i=0;i<10;i++)
-        {       
-            if(classifica[i][0]==personaggio)
-            { 
-                if(classifica[i][1]<punteggio)
-                classifica[i][1]=punteggio;          
-            }
+		for (int j=0; j<10; j++) {
+            fin >> classifica[j][0];
+            fin >> classifica[j][1];
         }
-                
+        for(int j=0;j<10;j++) {
+            if (classifica[i][0] == username)
+                return stoi(classifica[i][1]);
+        }
+        return 0;
 	}
     else 
         return 0;

@@ -57,6 +57,10 @@ Game game(std::string name) { // Ritorna l'oggetto Game
         system("color 0C");
     if (color == "fucsia")
         system("color DE");
+    if (color == "gray")
+        system("color 70");
+    if (color == "bordeaux")
+        system("color 4E");
 
     // Riempio la matrice, che in partenza è vuota
     for (int i = 0; i < 20; i++) {

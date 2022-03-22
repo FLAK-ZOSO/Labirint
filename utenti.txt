@@ -2,9 +2,9 @@ Bot1 100000
 Bot2 90000
 Bot3 8000
 Bot4 700
+Josif 246
 User 114
 User 70
 Bot5 60
 Bot6 50
-Bot7 40
-User 36
+Josif 44

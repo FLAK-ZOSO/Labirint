@@ -20,7 +20,7 @@ struct Game {
     unsigned borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
 };
 const int bordersLen = 48;
-unsigned borders[bordersLen] = {
+unsigned short borders[bordersLen] = {
     7, 7,
     6, 6, 6,
     5, 5, 5, 5,

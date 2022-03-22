@@ -34,23 +34,19 @@ void stampaDati() {
         string classifica[10][2] = {
             {"Bot1", "100000"},
             {"Bot2", "90000"},
-            {"Bot3", "80000"},
-            {"Bot4", "70000"},
-            {"Bot5", "60000"},
-            {"Bot6", "50000"},
-            {"Bot7", "40000"},
-            {"Bot8", "30000"},
-            {"Bot9", "20000"},
-            {"Bot10", "10000"}
+            {"Bot3", "8000"},
+            {"Bot4", "700"},
+            {"Bot5", "60"},
+            {"Bot6", "50"},
+            {"Bot7", "40"},
+            {"Bot8", "30"},
+            {"Bot9", "20"},
+            {"Bot10", "10"}
         };
         for (int i=0; i<10; i++) {
-            fout << classifica[i][0];
-            fout << classifica[i][1];
-            fout << endl;
-        }
-        for (int i=0; i<10; i++)
+            fout << classifica[i][0] << ' ' << classifica[i][1] << endl;
             cout << classifica[i][0] << ' ' << classifica[i][1] << endl;
-        system("pause");
+        }
         return;
     }
 
@@ -62,8 +58,6 @@ void stampaDati() {
     }
     for (int i=0; i<10; i++)
         cout << classifica[i][0] << ' ' << classifica[i][1] << endl;
-    
-    fin.close();
 }
 
 
@@ -80,28 +74,35 @@ void scriviDati(string username, int punteggio)
         fin >> classifica[j][0];
         fin >> classifica[j][1];
     }
-    if (punteggio<stoi(classifica[10][2])) // stoi = String TO Int
+    if (punteggio < stoi(classifica[9][1])) // stoi = String TO Int
         return;
+
+    // Inserisco il punteggio nella classifica
+    for (int i=0; i<10; i++)
+    {
+        if (stoi(classifica[i][1])<punteggio)
+        {
+            classifica[i][0]=username;
+            classifica[i][1]=to_string(punteggio);
+            for (int f=i+1; f<9; f++) {
+                classifica[i+1][0]=classifica[i][0];
+                classifica[i+1][1]=classifica[i][1];
+            }               
+        }
+    }
 
 
     // Poi la ristampi nel file
     ofstream fout;
 	fout.open("utenti.txt", ios::out);
 
-	if (fout)
-	{
+	if (fout) {
 		for (int i=0; i<10; i++)
-        {
-            if (stoi(classifica[i][1])<punteggio)
-            {
-                classifica[i][1]=to_string(punteggio);
-                for (int f=i+1; f<9; f++)
-                    classifica[i+1][1]=classifica[i][1];               
-            } // Eh già 😐
-        }
+            fout << classifica[i][0] << ' ' << classifica[i][1] << endl;
 	}
-
-	fout.close();
+    for (int i=0; i<10; i++)
+        cout << classifica[i][0] << ' ' << classifica[i][1] << endl;
+    system("pause");
 }
 
 
@@ -110,23 +111,15 @@ int leggiRecord(string username) {
     ifstream fin;
     fin.open("utenti.txt", ios::in);
     string classifica[10][2];
-    if (fin)
-	{
+    if (fin) {
 		for (int j=0; j<10; j++) {
             fin >> classifica[j][0];
             fin >> classifica[j][1];
         }
-        for(int j=0;j<10;j++) {
+        for (int j=0; j<10; j++) {
             if (classifica[j][0] == username)
                 return stoi(classifica[j][1]);
         }
-        return 0;
 	}
-    else 
-        return 0;
-        
-        
-	fin.close();
-
-    // Se non è ancora registrato fai return 0
+    return 0; // Se non è ancora registrato fai return 0
 }

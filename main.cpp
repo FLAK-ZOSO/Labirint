@@ -49,6 +49,9 @@ int game(std::string name) { // Ritorna il numero di punti
 
             // Aggiorniamo l'immagine
             printMatrix(myGame);
+
+            // Aumentiamo i punti
+            myGame.points++;
         }
         processMove(myGame, input.get());
         if (end)
@@ -56,8 +59,16 @@ int game(std::string name) { // Ritorna il numero di punti
     }
     updateMatrix(myGame);
     printMatrix(myGame);
-    std::cout << "You lost... ";
 	return myGame.points;
+}
+
+
+bool giocaAncora(string username) {
+    system("cls");
+    std::cout << "Do you want to play again? (y/n)\n> ";
+    char answer;
+    std::cin >> answer;
+    return (answer == 'y' || answer == 'Y'); 
 }
 
 
@@ -78,16 +89,19 @@ int main() {
     std::cin >> name;
 
     // Leggi record se c'è
-    int record = leggiRecord(name);
+    int points, record = leggiRecord(name);
 
-    while (true) {
-        int points = game(name);
-
-        // Salva i dati nel file utenti.txt
-        scriviDati(name, points);
-
-        // Chiediamo se vuole rigiocare
-    }
+    do {
+        points = game(name);
+        std::cout << "You scored " << points << " points" << std::endl;
+        std::cout << "Your record is " << record << " points" << std::endl;
+        system("pause");
+        system("cls");
+        if (record < points) { // Se ha battuto il record personale
+            std::cout << "Checking the leaderboard... " << std::endl;
+            scriviDati(name, points); // Salva i dati nel file utenti.txt
+        }
+    } while (giocaAncora(name)); // Chiediamo se vuole rigiocare
     
     return 0;
 }

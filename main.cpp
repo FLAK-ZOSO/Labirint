@@ -91,14 +91,14 @@ Game game(std::string name) { // Ritorna l'oggetto Game
                 end = true;
                 break;
             }
-            
             // Aggiorniamo la matrice
             updateMatrix(myGame);
-
             // Aggiorniamo l'immagine
             printMatrix(myGame);
         }
         processMove(myGame, input.get());
+        updateOnlyPawn(myGame);
+        printMatrix(myGame);
         if (end) break;
     }
     updateMatrix(myGame);

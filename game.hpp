@@ -40,6 +40,20 @@ unsigned short borders[bordersLen] = {
 };
 
 
+void updateOnlyPawn(Game &game_) {
+    // Trasformiamo la pedina vecchia in uno spazio
+    for (int i = 0; i < 50; i++) {
+        for (int j = 0; j < 20; j++) {
+            if (game_.matrix[j][i] == game_.skin) {
+                game_.matrix[j][i] = ' ';
+                break;
+            }
+        }
+    }
+    game_.matrix[game_.y][game_.x] = game_.skin;
+}
+
+
 void updateMatrix(Game &game_) {
     // Scaliamo tutto di una riga
     for (int i = 1; i < 20; i++) {

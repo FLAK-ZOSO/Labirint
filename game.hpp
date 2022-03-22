@@ -128,28 +128,28 @@ void printMatrix(Game game_) {
     std::cout << std::endl << game_.points << std::endl;
     std::cout << "X=" << game_.x << " Y=" << game_.y << " Z=" << game_.z << std::endl;
     std::cout << "Z Fuel: " << game_.zFuel << std::endl;
-    if (not game_.z)
+    if (!game_.z)
         std::cout << "Z Frames: " << game_.zFrames << std::endl;
 }
 
 
 void processMove(Game &game_, std::string input) {
     // Horizontal
-    if (input == "s" or input == "S")
+    if (input == "s" || input == "S")
         game_.x--;
-    if (input == "d" or input == "D")
+    if (input == "d" || input == "D")
         game_.x++;
-    if (input == "ss" or input == "SS")
+    if (input == "ss" || input == "SS")
 		game_.x -= 2;
-    if (input == "dd" or input == "DD")
+    if (input == "dd" || input == "DD")
         game_.x += 2;
     // Vertical
-    if (input == "a" or input == "A")
+    if (input == "a" || input == "A")
         game_.y--;
-    if (input == "b" or input == "B")
+    if (input == "b" || input == "B")
         game_.y++;
     // 3D
-    if (input == "z" or input == "Z") {
+    if (input == "z" || input == "Z") {
         if (game_.z) {
             if (game_.zFuel > 0) {
                 game_.z = false;

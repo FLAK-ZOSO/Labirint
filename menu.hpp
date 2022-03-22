@@ -57,7 +57,8 @@ void stampaDati() {
 void scriviDati(string username, int punteggio) 
 {
     // Apro il file utenti.txt e inserisco in mezzo l'utente SE ha fatto un punteggio da classifica
-    string classifica[10][2];
+
+    string classifica[10][2]; // Classifica, ma meglio dire elenco dei migliori 10 risultati
 
     ifstream fin;
     fin.open("utenti.txt", ios::in);
@@ -94,8 +95,7 @@ void scriviDati(string username, int punteggio)
 
 int leggiRecord(string username) {
     // Se è già registrato fai return del suo record
-    ifstream fin;
-    fin.open("utenti.txt", ios::in);
+    ifstream fin("utenti.txt", ios::in);
     string classifica[10][2];
     if (fin) {
 		for (int j=0; j<10; j++) {

@@ -28,7 +28,28 @@ void stampaDati() {
         while (getline(fin, testo))
             cout << testo << endl;
     } else {
-        cout << "Errore apertura file utenti.txt" << endl;
+        // Non esiste il file, quindi lo creiamo
+        ofstream fout("utenti.txt", ios::out);
+        string classifica[10][2] = {
+            {"Bot1", "100000"}
+            {"Bot2", "90000"}
+            {"Bot3", "80000"}
+            {"Bot4", "70000"}
+            {"Bot5", "60000"}
+            {"Bot6", "50000"}
+            {"Bot7", "40000"}
+            {"Bot8", "30000"}
+            {"Bot9", "20000"}
+            {"Bot10", "10000"}
+        }
+        for (int i=0; i<10; i++) {
+            fout << classifica[i][0];
+            fout << classifica[i][1];
+            fout << endl;
+        }
+        for (int i=0; i<10; i++)
+        cout << classifica[i][0]  < ' ' << classifica[i][1] << endl;
+        system("pause");
         return;
     }
 
@@ -58,8 +79,8 @@ void scriviDati(string username, int punteggio)
         fin >> classifica[j][0];
         fin >> classifica[j][1];
     }
-    if (/*Il punteggio non è da top-10*/)
-        return; // Se il punteggio non è da top 10 allora finisci la funzione perché il file non va modificato
+    if (punteggio<stoi(classifica[10][2])) // stoi = String TO Int
+        return 0;
 
 
     // Poi la ristampi nel file
@@ -71,13 +92,12 @@ void scriviDati(string username, int punteggio)
 		for(int i=0;i<10;i++)
         {       
             if(classifica[i][1]<punteggio)
-                {
-                 classifica[i][1]=punteggio;
+            {
+                classifica[i][1]=punteggio;
                 for(int f=i+1;f<10;f++)
-                classifica[i][1]=classifica[i+1][1];
-                                
-                } // Eh già 😐
-                
+                    classifica[i][1]=classifica[i+1][1];               
+            } // Eh già 😐
+        }    
 	}
         
 	fout.close();
@@ -93,12 +113,14 @@ ifstream fin;
 		for(int i=0;i<10;i++)
         {       
             if(classifica[i][0]==personaggio)
-                { if(classifica[i][1]<punteggio)
-                 classifica[i][1]=punteggio;          
-                } 
+            { 
+                if(classifica[i][1]<punteggio)
+                classifica[i][1]=punteggio;          
+            }
+        }
                 
 	}
-        else 
+    else 
         return 0;
         
         

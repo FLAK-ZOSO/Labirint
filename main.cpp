@@ -2,6 +2,7 @@
 #include <thread>
 #include <limits>
 #include "game.hpp"
+#include "menu.hpp"
 
 
 std::string inputMove() {
@@ -102,28 +103,45 @@ Game game(std::string name) { // Ritorna l'oggetto Game
 }
 
 
+bool giocaAncora(string username) {
+    system("cls");
+    std::cout << "Do you want to play again? (y/n)\n> ";
+    char answer;
+    std::cin >> answer;
+    return (answer == 'y' || answer == 'Y'); 
+}
+
+
 int main() {
+    // Stampiamo il menu con una funzione che viene da menu.hpp
+    stampaScrittaMenu();
+    system("pause >nul"); // Mette in pausa l'esecuzione finché l'utente non preme invio
+    system("cls"); // Pulisce lo schermo
+
+    // Elaboriamo tutti i dati con dei file .txt (di testo)
+    stampaDati();
+    system("pause >nul");
+    system("cls");
+
     // Chiediamo le varie informazioni all'utente
     std::string name;
     std::cout << "Username: ";
     std::cin >> name;
 
-    // Salviamo tutti i dati in dei file .txt (di testo)
+    // Leggi record se c'è
+    int points, record = leggiRecord(name);
 
-    while (true) {
-        Game game_ = game(name);
+    do {
+        points = game(name).points;
+        std::cout << "You scored " << points << " points" << std::endl;
+        std::cout << "Your record is " << record << " points" << std::endl;
+        system("pause >nul");
         system("cls");
-        std::cout << "Points: " << game_.points << std::endl;
-        std::cout << "Difficulty multiplier: " <<  (game_.bonusFrequency+1) * game_.maxCloudWidth << std::endl;
-        std::cout << "Score: " << game_.points * (game_.bonusFrequency+1) * game_.maxCloudWidth;
-        std::cout << std::endl << std::endl;
-
-        // Salviamo questi dati nel file di testo
-
-        // Chiediamo se vuole rigiocare
-        if (!newGame()) break;
-    }
-    // Menu principale
+        if (record < points) { // Se ha battuto il record personale
+            std::cout << "Checking the leaderboard... " << std::endl;
+            scriviDati(name, points); // Salva i dati nel file utenti.txt
+        }
+    } while (giocaAncora(name)); // Chiediamo se vuole rigiocare
     
     return 0;
 }

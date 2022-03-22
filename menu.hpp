@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
 
 
@@ -31,24 +32,24 @@ void stampaDati() {
         // Non esiste il file, quindi lo creiamo
         ofstream fout("utenti.txt", ios::out);
         string classifica[10][2] = {
-            {"Bot1", "100000"}
-            {"Bot2", "90000"}
-            {"Bot3", "80000"}
-            {"Bot4", "70000"}
-            {"Bot5", "60000"}
-            {"Bot6", "50000"}
-            {"Bot7", "40000"}
-            {"Bot8", "30000"}
-            {"Bot9", "20000"}
+            {"Bot1", "100000"},
+            {"Bot2", "90000"},
+            {"Bot3", "80000"},
+            {"Bot4", "70000"},
+            {"Bot5", "60000"},
+            {"Bot6", "50000"},
+            {"Bot7", "40000"},
+            {"Bot8", "30000"},
+            {"Bot9", "20000"},
             {"Bot10", "10000"}
-        }
+        };
         for (int i=0; i<10; i++) {
             fout << classifica[i][0];
             fout << classifica[i][1];
             fout << endl;
         }
         for (int i=0; i<10; i++)
-        cout << classifica[i][0]  < ' ' << classifica[i][1] << endl;
+            cout << classifica[i][0] << ' ' << classifica[i][1] << endl;
         system("pause");
         return;
     }
@@ -60,7 +61,7 @@ void stampaDati() {
         fin >> classifica[i][1]; // Nella seconda colonna ci sono i punteggi sottoforma di stringa
     }
     for (int i=0; i<10; i++)
-        cout << classifica[i][0]  < ' ' << classifica[i][1] << endl;
+        cout << classifica[i][0] << ' ' << classifica[i][1] << endl;
     
     fin.close();
 }
@@ -80,7 +81,7 @@ void scriviDati(string username, int punteggio)
         fin >> classifica[j][1];
     }
     if (punteggio<stoi(classifica[10][2])) // stoi = String TO Int
-        return 0;
+        return;
 
 
     // Poi la ristampi nel file
@@ -108,6 +109,7 @@ int leggiRecord(string username) {
     // Se è già registrato fai return del suo record
     ifstream fin;
     fin.open("utenti.txt", ios::in);
+    string classifica[10][2];
     if (fin)
 	{
 		for (int j=0; j<10; j++) {
@@ -115,8 +117,8 @@ int leggiRecord(string username) {
             fin >> classifica[j][1];
         }
         for(int j=0;j<10;j++) {
-            if (classifica[i][0] == username)
-                return stoi(classifica[i][1]);
+            if (classifica[j][0] == username)
+                return stoi(classifica[j][1]);
         }
         return 0;
 	}
@@ -124,7 +126,7 @@ int leggiRecord(string username) {
         return 0;
         
         
-	fout.close();
+	fin.close();
 
     // Se non è ancora registrato fai return 0
 }

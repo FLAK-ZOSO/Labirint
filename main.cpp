@@ -75,12 +75,12 @@ bool giocaAncora(string username) {
 int main() {
     // Stampiamo il menu con una funzione che viene da menu.hpp
     stampaScrittaMenu();
-    system("pause"); // Mette in pausa l'esecuzione finché l'utente non preme invio
+    system("pause >nul"); // Mette in pausa l'esecuzione finché l'utente non preme invio
     system("cls"); // Pulisce lo schermo
 
     // Elaboriamo tutti i dati con dei file .txt (di testo)
     stampaDati();
-    system("pause");
+    system("pause >nul");
     system("cls");
 
     // Chiediamo le varie informazioni all'utente
@@ -95,7 +95,7 @@ int main() {
         points = game(name);
         std::cout << "You scored " << points << " points" << std::endl;
         std::cout << "Your record is " << record << " points" << std::endl;
-        system("pause");
+        system("pause >nul");
         system("cls");
         if (record < points) { // Se ha battuto il record personale
             std::cout << "Checking the leaderboard... " << std::endl;

@@ -77,32 +77,26 @@ void scriviDati(string username, int punteggio)
     if (punteggio < stoi(classifica[9][1])) // stoi = String TO Int
         return;
 
+    ofstream fout;
+    fout.open("utenti.txt", ios::out);
+    
     // Inserisco il punteggio nella classifica
-    for (int i=0; i<10; i++)
-    {
-        if (stoi(classifica[i][1])<punteggio)
-        {
-            classifica[i][0]=username;
-            classifica[i][1]=to_string(punteggio);
-            for (int f=i+1; f<9; f++) {
-                classifica[i+1][0]=classifica[i][0];
-                classifica[i+1][1]=classifica[i][1];
-            }               
+    for (int i=0; i<10; i++) {
+        if (stoi(classifica[i][1])<punteggio) {
+            fout << username << ' ' << to_string(punteggio) << endl;
+            cout << username << ' ' << to_string(punteggio) << endl;
+            for (int f=i+1; f<10; f++) {
+                fout << classifica[f-1][0] << ' ' << classifica[f-1][1] << endl;
+                cout << classifica[f-1][0] << ' ' << classifica[f-1][1] << endl;
+            }
+            break;
+        } else {
+            // Poi la ristampi nel file
+            fout << classifica[i][0] << ' ' << classifica[i][1] << endl;
+            cout << classifica[i][0] << ' ' << classifica[i][1] << endl;
         }
     }
-
-
-    // Poi la ristampi nel file
-    ofstream fout;
-	fout.open("utenti.txt", ios::out);
-
-	if (fout) {
-		for (int i=0; i<10; i++)
-            fout << classifica[i][0] << ' ' << classifica[i][1] << endl;
-	}
-    for (int i=0; i<10; i++)
-        cout << classifica[i][0] << ' ' << classifica[i][1] << endl;
-    system("pause");
+    system("pause >nul");
 }
 
 

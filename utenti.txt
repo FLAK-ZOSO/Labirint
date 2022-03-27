@@ -4,7 +4,7 @@ Bot3 8000
 Bot4 700
 Josif 246
 FLAK 181
+0alvolante 177
 User 114
 flak 100
 User 70
-Bot5 60

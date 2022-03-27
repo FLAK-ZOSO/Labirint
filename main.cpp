@@ -78,7 +78,7 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     myGame.matrix[3][24] = myGame.skin;    
 
     bool end = false;
-    while (true) {
+    while (!end) {
         // Enable standard literals as 2s and ""s.
         using namespace std::literals;
     	// Eseguo la funzione inputMove in modo asincrono
@@ -86,20 +86,21 @@ Game game(std::string name) { // Ritorna l'oggetto Game
 	    
         // Continue execution in main thread.
         while (input.wait_for(frame_duration) != std::future_status::ready) {
-            // Controlliamo se ha perso
-            if (checkMatrix(myGame)) { // The user lost
+            if (checkMatrix(myGame)) { // Controlliamo se ha perso
                 end = true;
                 break;
             }
-            // Aggiorniamo la matrice
-            updateMatrix(myGame);
-            // Aggiorniamo l'immagine
-            printMatrix(myGame);
+            updateMatrix(myGame); // Aggiorniamo la matrice
+            printMatrix(myGame); // Aggiorniamo l'immagine
         }
         processMove(myGame, input.get());
         updateOnlyPawn(myGame);
+        std::async(std::launch::async, [frame_duration, &myGame] () {
+            std::this_thread::sleep_for(frame_duration/2);
+            updateMatrix(myGame); // Aggiorniamo la matrice
+            printMatrix(myGame); // Aggiorniamo l'immagine
+        });
         printMatrix(myGame);
-        if (end) break;
     }
     updateMatrix(myGame);
     printMatrix(myGame);

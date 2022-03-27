@@ -10,7 +10,7 @@ void stampaScrittaMenu() {
     cout << "LLL           AAA    AAA    BBBBBBBBB    III   RRRRRRRRR    III   NNN  NNN  NNN     TTT      " << endl;
     cout << "LLL          AAAAAAAAAAAA   BBB    BBB   III   RRR RRR      III   NNN   NNN NNN     TTT      " << endl;
     cout << "LLLLLLLLLL  AAA        AAA  BBBBBBBBB   IIIII  RRR  RRRR   IIIII  NNN    NNNNNN     TTT      " << endl;
-    cout << "\n                                   By FLAK-ZOSO & AsiaMarcheluzzo" << endl;
+    cout << "\n                              By FLAK-ZOSO & AsiaMarcheluzzo                               " << endl;
 }
 
 
@@ -55,13 +55,12 @@ void stampaDati() {
 }
 
 
-void scriviDati(string username, int punteggio) 
-{
+void scriviDati(string username, int punteggio) {
     // Apro il file utenti.txt e inserisco in mezzo l'utente SE ha fatto un punteggio da classifica
 
     string classifica[10][2]; // Classifica, ma meglio dire elenco dei migliori 10 risultati
 
-    ifstream fin;
+    ifstream fin; // File della classifica in modalità input
     fin.open("utenti.txt", ios::in);
 
     for(int j=0;j<10;j++) {
@@ -71,7 +70,7 @@ void scriviDati(string username, int punteggio)
     if (punteggio < stoi(classifica[9][1])) // stoi = String TO Int
         return;
 
-    ofstream fout;
+    ofstream fout; // File della classifica in modalità output
     fout.open("utenti.txt", ios::out);
     
     // Inserisco il punteggio nella classifica
@@ -102,8 +101,6 @@ int leggiRecord(string username) {
 		for (int j=0; j<10; j++) {
             fin >> classifica[j][0];
             fin >> classifica[j][1];
-        }
-        for (int j=0; j<10; j++) {
             if (classifica[j][0] == username)
                 return stoi(classifica[j][1]);
         }

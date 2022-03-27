@@ -11,15 +11,15 @@ struct Game {
     int x; // Posizione in orizzontale della pedina
     int y; // Posizione in verticale della pedina
     bool z; // Posizione 3D della pedina, che ha solo due valori, true è il default
-    unsigned zFrames; // Quanti frame può ancora passare con l'immunità
-    unsigned zFuel; // Quante volte può ancora usare Z
+    unsigned short zFrames; // Quanti frame può ancora passare con l'immunità
+    unsigned short zFuel; // Quante volte può ancora usare Z
     bool emptyLine; // Una riga su due sarà stampata vuota, quando è true si stampa una riga vuota
-    unsigned maxCloudWidth; // Massima larghezza delle nuvole
-    unsigned bonus; // Una riga su Game.bonusFrequency potrebbe contenere un bonus
-    unsigned bonusFrequency; // Ogni quante righe appare un bonus
-    unsigned borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
+    unsigned short maxCloudWidth; // Massima larghezza delle nuvole
+    unsigned short bonus; // Una riga su Game.bonusFrequency potrebbe contenere un bonus
+    unsigned short bonusFrequency; // Ogni quante righe appare un bonus
+    unsigned short borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
 };
-const int bordersLen = 48;
+const unsigned short bordersLen = 48;
 unsigned short borders[bordersLen] = {
     7, 7,
     6, 6, 6,
@@ -39,9 +39,8 @@ unsigned short borders[bordersLen] = {
     8
 };
 
-
+// Aggiorniamo la posizione della pedina
 void updateOnlyPawn(Game &game_) {
-    // Trasformiamo la pedina vecchia in uno spazio
     for (int i = 0; i < 50; i++) {
         for (int j = 0; j < 20; j++) {
             if (game_.matrix[j][i] == game_.skin) {
@@ -189,7 +188,7 @@ bool checkMatrix(Game &game_) {
             return true; // Il giocatore ha perso
     }
     if (game_.matrix[game_.y+1][game_.x] == '-')
-            return true; // Il giocatore ha perso
+        return true; // Il giocatore ha perso
     if (game_.matrix[game_.y+1][game_.x] == '$')
         game_.points += 10;
     if (game_.matrix[game_.y+1][game_.x] == '@') {

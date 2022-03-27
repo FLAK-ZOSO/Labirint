@@ -84,7 +84,7 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     	// Eseguo la funzione inputMove in modo asincrono
 	    auto input = std::async(std::launch::async, inputMove);
 	    
-        // Continue execution in main thread.
+        // Continue execution in main thread
         while (input.wait_for(frame_duration) != std::future_status::ready) {
             if (checkMatrix(myGame)) { // Controlliamo se ha perso
                 end = true;
@@ -94,12 +94,6 @@ Game game(std::string name) { // Ritorna l'oggetto Game
             printMatrix(myGame); // Aggiorniamo l'immagine
         }
         processMove(myGame, input.get());
-        updateOnlyPawn(myGame);
-        std::async(std::launch::async, [frame_duration, &myGame] () {
-            std::this_thread::sleep_for(frame_duration/2);
-            updateMatrix(myGame); // Aggiorniamo la matrice
-            printMatrix(myGame); // Aggiorniamo l'immagine
-        });
         printMatrix(myGame);
     }
     updateMatrix(myGame);

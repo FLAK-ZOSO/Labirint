@@ -38,6 +38,11 @@ void updateMatrix(Game &game_)
     int larghezza = rand()%6; // Larghezza della nuvola
     for(int n=0; n<larghezza; n++)
         game_.matrix[18][inizio+n] = '*';
+    
+    inizio = rand()%44; // Coordinata alla quale inizia la nuvola vuota
+    larghezza = rand()%6; // Larghezza della nuvola vuota
+    for(int n=0; n<larghezza; n++)
+        game_.matrix[18][inizio+n] = ' ';
 
     // Ripristina il bordo di #
     for(int j=0; j<50;j++) 

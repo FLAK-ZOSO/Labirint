@@ -31,18 +31,17 @@ void updateMatrix(Game &game_)
         for(int c=0;c<50;c++)
             game_.matrix[r-1][c]=game_.matrix[r][c];
     }
+    for(int r=1;r<49;r++) { // Ripulisco l'ultima riga e la prima
+        game_.matrix[18][r]=' ';
+        game_.matrix[1][r]=' ';
+    }
 
     // Genera le nuove nuvole * nella riga 18 (game_.matrix[18][...])
-    srand(time(0)); 
+    // srand(time(0)); 
     int inizio = rand()%44; // Coordinata alla quale inizia la nuvola
     int larghezza = rand()%6; // Larghezza della nuvola
     for(int n=0; n<larghezza; n++)
         game_.matrix[18][inizio+n] = '*';
-    
-    inizio = rand()%44; // Coordinata alla quale inizia la nuvola vuota
-    larghezza = rand()%6; // Larghezza della nuvola vuota
-    for(int n=0; n<larghezza; n++)
-        game_.matrix[18][inizio+n] = ' ';
 
     // Ripristina il bordo di #
     for(int j=0; j<50;j++) 

@@ -1,7 +1,7 @@
 #include <future>
 #include <thread>
 #include "game.hpp"
-
+// g++ main.cpp -o main.exe -std=c++2a
 
 int game(std::string name) { // Ritorna il numero di punti
     Game myGame; // myGame è un'istanza della struct Game

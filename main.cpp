@@ -1,8 +1,10 @@
 #include <future>
 #include <thread>
 #include <limits>
+#include <cstring>
 #include "game.hpp"
 #include "menu.hpp"
+// g++ main.cpp -o labirint.exe -std=c++2a
 
 
 std::string inputMove() {
@@ -75,7 +77,7 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     myGame.skin = name[0];
     myGame.x = 24;
     myGame.y = 3;
-    myGame.matrix[3][24] = myGame.skin;    
+    myGame.matrix[3][24] = myGame.skin;
 
     bool end = false;
     while (!end) {
@@ -83,7 +85,7 @@ Game game(std::string name) { // Ritorna l'oggetto Game
         using namespace std::literals;
     	// Eseguo la funzione inputMove in modo asincrono
 	    auto input = std::async(std::launch::async, inputMove);
-	    
+
         // Continue execution in main thread
         while (input.wait_for(frame_duration) != std::future_status::ready) {
             if (checkMatrix(myGame)) { // Controlliamo se ha perso
@@ -107,11 +109,24 @@ bool giocaAncora(string username) {
     std::cout << "Do you want to play again? (y/n)\n> ";
     char answer;
     std::cin >> answer;
-    return (answer == 'y' || answer == 'Y'); 
+    return (answer == 'y' || answer == 'Y');
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
+		if (argc == 2 && !strcmp(argv[1], "--help")) {
+        std::cout << "Usage: labirint [--help] [--version]" << std::endl << std::endl;
+        std::cout << "Options:" << std::endl;
+        std::cout << "  --help      Show this help message and exit" << std::endl;
+        std::cout << "  --version   Show version and exit" << std::endl;
+        return 0;
+    } else if (argc == 2 && !strcmp(argv[1], "--version")) {
+        std::cout << VERSION << std::endl;
+        return 0;
+    } else if (argc > 2) {
+        std::cout << "Usage: labirint [--help] [--version]" << std::endl;
+        return 0;
+    }
     // Stampiamo il menu con una funzione che viene da menu.hpp
     stampaScrittaMenu();
     system("pause >nul"); // Mette in pausa l'esecuzione finché l'utente non preme invio
@@ -141,6 +156,6 @@ int main() {
             scriviDati(name, points); // Salva i dati nel file utenti.txt
         }
     } while (giocaAncora(name)); // Chiediamo se vuole rigiocare
-    
+
     return 0;
 }

@@ -2,15 +2,17 @@
 #include <fstream>
 #include <string>
 using namespace std;
+const std::string VERSION = "v4.2.0";
 
 
 void stampaScrittaMenu() {
+    system("cls");
     cout << "LLL             AAAAAA      BBBBBBBBB   IIIII  RRRRRRRRR   IIIII  NNNNNN    NNN TTTTTTTTTTT  " << endl;
     cout << "LLL            AAA  AAA     BBB    BBB   III   RRR    RRR   III   NNN NNN   NNN     TTT      " << endl;
     cout << "LLL           AAA    AAA    BBBBBBBBB    III   RRRRRRRRR    III   NNN  NNN  NNN     TTT      " << endl;
     cout << "LLL          AAAAAAAAAAAA   BBB    BBB   III   RRR RRR      III   NNN   NNN NNN     TTT      " << endl;
     cout << "LLLLLLLLLL  AAA        AAA  BBBBBBBBB   IIIII  RRR  RRRR   IIIII  NNN    NNNNNN     TTT      " << endl;
-    cout << "\n                              By FLAK-ZOSO & AsiaMarcheluzzo                               " << endl;
+    cout << "\n                           " << VERSION << "  By FLAK-ZOSO & AsiaMarcheluzzo                       " << endl;
 }
 
 
@@ -72,7 +74,7 @@ void scriviDati(string username, int punteggio) {
 
     ofstream fout; // File della classifica in modalità output
     fout.open("utenti.txt", ios::out);
-    
+
     // Inserisco il punteggio nella classifica
     for (int i=0; i<10; i++) {
         if (stoi(classifica[i][1])<punteggio) {

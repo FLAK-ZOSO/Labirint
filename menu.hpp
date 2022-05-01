@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
-const std::string VERSION = "v4.2.0";
+const std::string VERSION = "v4.2.1";
 
 
 void stampaScrittaMenu() {

@@ -2,14 +2,15 @@
 #include <thread>
 #include <limits>
 #include <cstring>
+#include <conio.h>
 #include "game.hpp"
 #include "menu.hpp"
 // g++ main.cpp -o labirint.exe -std=c++2a
 
 
-std::string inputMove() {
-	std::string move;
-	if (std::cin >> move) return move;
+char inputMove() {
+	char move = getch();
+    return move;
 }
 
 

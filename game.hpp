@@ -146,23 +146,19 @@ void printMatrix(Game game_) {
 }
 
 
-void processMove(Game &game_, std::string input) {
+void processMove(Game &game_, char input) {
     // Horizontal
-    if (input == "s" || input == "S")
+    if (input == 'a' || input == 'A')
         game_.x--;
-    if (input == "d" || input == "D")
+    if (input == 'd' || input == 'D')
         game_.x++;
-    if (input == "ss" || input == "SS")
-		game_.x -= 2;
-    if (input == "dd" || input == "DD")
-        game_.x += 2;
     // Vertical
-    if (input == "a" || input == "A")
+    if (input == 'w' || input == 'W')
         game_.y--;
-    if (input == "b" || input == "B")
+    if (input == 's' || input == 'S')
         game_.y++;
     // 3D
-    if (input == "z" || input == "Z") {
+    if (input == 'z' || input == 'Z') {
         if (game_.z) {
             if (game_.zFuel > 0) {
                 game_.z = false;

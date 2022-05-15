@@ -39,19 +39,6 @@ unsigned short borders[bordersLen] = {
     8
 };
 
-// Aggiorniamo la posizione della pedina
-void updateOnlyPawn(Game &game_) {
-    for (int i = 0; i < 50; i++) {
-        for (int j = 0; j < 20; j++) {
-            if (game_.matrix[j][i] == game_.skin) {
-                game_.matrix[j][i] = ' ';
-                break;
-            }
-        }
-    }
-    game_.matrix[game_.y][game_.x] = game_.skin;
-}
-
 
 void updateMatrix(Game &game_) {
     // Scaliamo tutto di una riga
@@ -147,48 +134,47 @@ void printMatrix(Game game_) {
 
 
 void processMove(Game &game_, char input) {
-    // Horizontal
+    // W/A/S/D (W = up, A = left, S = down, D = right)
     if (input == 'a' || input == 'A')
         game_.x--;
     if (input == 'd' || input == 'D')
         game_.x++;
-    // Vertical
     if (input == 'w' || input == 'W')
         game_.y--;
     if (input == 's' || input == 'S')
         game_.y++;
-    // 3D
-    if (input == 'z' || input == 'Z') {
-        if (game_.z) {
-            if (game_.zFuel > 0) {
-                game_.z = false;
-                game_.zFuel--;
-                game_.zFrames = 10;
+
+    if (input == 'z' || input == 'Z') { // Se clicchi 'z' o 'Z'
+        if (game_.z) { // Se è già in Z...
+            if (game_.zFuel > 0) { // Se hai ancora @ da usare
+                game_.z = false; // Passa in modalità z
+                game_.zFuel--; // Usa un @ (ti viene tolto)
+                game_.zFrames = 10; // Ti dà 10 fotogrammi d'immunità
             }
         } else {
-            game_.z = true;
+            game_.z = true; // Se hai cliccato z mentre stavi in modalità z, esci dalla modalità z
         }
     }
 
     // Effetto pacman verticale
-    if (game_.y < 0)
-        game_.y = 17;
-    if (game_.y > 17)
-        game_.y = 0;
+    if (game_.y < 0) // Se urti il bordo superiore
+        game_.y = 17; // Torna al bordo inferiore
+    else if (game_.y > 17) // Se urti il bordo inferiore
+        game_.y = 0; // Torna al bordo superiore
 }
 
 
 bool checkMatrix(Game &game_) {
-    if (game_.z) { // Se è sul piano di sopra
-        if (game_.matrix[game_.y+1][game_.x] == '*')
-            return true; // Il giocatore ha perso
+    if (game_.z) { // Se non sei in modalità z...
+        if (game_.matrix[game_.y+1][game_.x] == '*') // ...e da fesso colpisci una nuvola...
+            return true; // ...perdi
     }
-    if (game_.matrix[game_.y+1][game_.x] == '-')
-        return true; // Il giocatore ha perso
-    if (game_.matrix[game_.y+1][game_.x] == '$')
-        game_.points += 10;
-    if (game_.matrix[game_.y+1][game_.x] == '@') {
-        game_.zFuel++;
+    if (game_.matrix[game_.y+1][game_.x] == '-') // Se da fesso colpisci una riga...
+        return true; // ...perdi
+    if (game_.matrix[game_.y+1][game_.x] == '$') // Se da bravo colpisci un bonus...
+        game_.points += 10; // ...prendi punti
+    if (game_.matrix[game_.y+1][game_.x] == '@') { // Se da bravo colpisci un carburante z...
+        game_.zFuel++; // ...prendi un @
     }
     return false;
 }

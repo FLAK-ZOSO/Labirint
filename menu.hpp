@@ -18,16 +18,17 @@ void stampaScrittaMenu() {
 
 void stampaDati() {
     // Leggi il file di testo che chiamiamo utenti.txt
-    ifstream fin;
-    fin.open("utenti.txt", ios::in);
+    ifstream fin; // Dichiaro una variabile ifstream
+    fin.open("utenti.txt", ios::in); // Apre il flusso con "utenti.txt"
     string testo;
 
-    if (fin) {
-        while (getline(fin, testo))
-            cout << testo << endl;
+    if (fin) { // Se il file esiste...
+        while (getline(fin, testo)) // ...allora leggiamo il file...
+            cout << testo << endl; // ...e lo mettiamo in output
     } else {
         // Non esiste il file, quindi lo creiamo
-        ofstream fout("utenti.txt", ios::out);
+        ofstream fout; // Dichiaro un flusso in uscita
+        fout.open("utenti.txt", ios::out); // Lo apro verso "utenti.txt"
         string classifica[10][2] = {
             {"Bot1", "100000"},
             {"Bot2", "90000"},
@@ -70,7 +71,8 @@ void scriviDati(string username, int punteggio) {
         fin >> classifica[j][1];
     }
     if (punteggio < stoi(classifica[9][1])) // stoi = String TO Int
-        return;
+        return; // Se il punteggio dell'utente è minore di quello dell'ultimo in classifica allora non occorre salvarlo
+
 
     ofstream fout; // File della classifica in modalità output
     fout.open("utenti.txt", ios::out);

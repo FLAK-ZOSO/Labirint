@@ -40,7 +40,7 @@ unsigned short borders[bordersLen] = {
 };
 
 
-void updateMatrix(Game &game_) {
+void updateMatrix(Game &game_) { // Passo per riferimento la variabile di tipo Game
     // Scaliamo tutto di una riga
     for (int i = 1; i < 20; i++) {
     	for (int j = 0; j < 50; j++)

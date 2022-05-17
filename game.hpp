@@ -18,29 +18,30 @@ struct Game {
     unsigned short bonus; // Una riga su Game.bonusFrequency potrebbe contenere un bonus
     unsigned short bonusFrequency; // Ogni quante righe appare un bonus
     unsigned short borderCounter; // Contatore per l'array della lunghezza del bordo sinistro
+    int contatorePerLaProf;
 };
-const unsigned short bordersLen = 48;
+const unsigned short bordersLen = 10;
 unsigned short borders[bordersLen] = {
-    7, 7,
-    6, 6, 6,
-    5, 5, 5, 5,
-    4, 4, 4, 4, 4,
-    3, 3, 3, 3,
-    2, 2, 2,
-    1, 1,
-    0,
-    1, 1,
-    2, 2, 2,
-    3, 3, 3, 3,
-    4, 4, 4, 4, 4,
-    5, 5, 5, 5,
-    6, 6, 6,
-    7, 7,
-    8
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
+double discende = true;
 
-void updateMatrix(Game &game_) { // Passo per riferimento la variabile di tipo Game
+// Aggiorniamo la posizione della pedina
+void updateOnlyPawn(Game &game_) {
+    for (int i = 0; i < 50; i++) {
+        for (int j = 0; j < 20; j++) {
+            if (game_.matrix[j][i] == game_.skin) {
+                game_.matrix[j][i] = ' ';
+                break;
+            }
+        }
+    }
+    game_.matrix[game_.y][game_.x] = game_.skin;
+}
+
+
+void updateMatrix(Game &game_) {
     // Scaliamo tutto di una riga
     for (int i = 1; i < 20; i++) {
     	for (int j = 0; j < 50; j++)
@@ -82,7 +83,16 @@ void updateMatrix(Game &game_) { // Passo per riferimento la variabile di tipo G
     if (rand()%15 == 0) // Una volta su 15 può capitare un "carburante z", il cui nome fa schifo ma shh
         newLine[rand()%34 + 15] = '@';
     int endLeftBorder = (borders[game_.borderCounter])+15;
-    int beginRightBorder = 49-(30-endLeftBorder);
+    int beginRightBorder = 49-(30-game_.contatorePerLaProf-endLeftBorder);
+    if (game_.contatorePerLaProf == 10) {
+        discende = true;
+    } else if (game_.contatorePerLaProf == 0) {
+        discende = false;
+    }
+    if (discende)
+        game_.contatorePerLaProf--;
+    else
+        game_.contatorePerLaProf++;        
     for (int i = 1; i < endLeftBorder; i++)
         newLine[i] = '-';
     for (int i = beginRightBorder; i < 49; i++)
@@ -133,48 +143,53 @@ void printMatrix(Game game_) {
 }
 
 
-void processMove(Game &game_, char input) {
-    // W/A/S/D (W = up, A = left, S = down, D = right)
-    if (input == 'a' || input == 'A')
+void processMove(Game &game_, std::string input) {
+    // Horizontal
+    if (input == "s" || input == "S")
         game_.x--;
-    if (input == 'd' || input == 'D')
+    if (input == "d" || input == "D")
         game_.x++;
-    if (input == 'w' || input == 'W')
+    if (input == "ss" || input == "SS")
+		game_.x -= 2;
+    if (input == "dd" || input == "DD")
+        game_.x += 2;
+    // Vertical
+    if (input == "a" || input == "A")
         game_.y--;
-    if (input == 's' || input == 'S')
+    if (input == "b" || input == "B")
         game_.y++;
-
-    if (input == 'z' || input == 'Z') { // Se clicchi 'z' o 'Z'
-        if (game_.z) { // Se è già in Z...
-            if (game_.zFuel > 0) { // Se hai ancora @ da usare
-                game_.z = false; // Passa in modalità z
-                game_.zFuel--; // Usa un @ (ti viene tolto)
-                game_.zFrames = 10; // Ti dà 10 fotogrammi d'immunità
+    // 3D
+    if (input == "z" || input == "Z") {
+        if (game_.z) {
+            if (game_.zFuel > 0) {
+                game_.z = false;
+                game_.zFuel--;
+                game_.zFrames = 10;
             }
         } else {
-            game_.z = true; // Se hai cliccato z mentre stavi in modalità z, esci dalla modalità z
+            game_.z = true;
         }
     }
 
     // Effetto pacman verticale
-    if (game_.y < 0) // Se urti il bordo superiore
-        game_.y = 17; // Torna al bordo inferiore
-    else if (game_.y > 17) // Se urti il bordo inferiore
-        game_.y = 0; // Torna al bordo superiore
+    if (game_.y < 0)
+        game_.y = 17;
+    if (game_.y > 17)
+        game_.y = 0;
 }
 
 
 bool checkMatrix(Game &game_) {
-    if (game_.z) { // Se non sei in modalità z...
-        if (game_.matrix[game_.y+1][game_.x] == '*') // ...e da fesso colpisci una nuvola...
-            return true; // ...perdi
+    if (game_.z) { // Se è sul piano di sopra
+        if (game_.matrix[game_.y+1][game_.x] == '*')
+            return true; // Il giocatore ha perso
     }
-    if (game_.matrix[game_.y+1][game_.x] == '-') // Se da fesso colpisci una riga...
-        return true; // ...perdi
-    if (game_.matrix[game_.y+1][game_.x] == '$') // Se da bravo colpisci un bonus...
-        game_.points += 10; // ...prendi punti
-    if (game_.matrix[game_.y+1][game_.x] == '@') { // Se da bravo colpisci un carburante z...
-        game_.zFuel++; // ...prendi un @
+    if (game_.matrix[game_.y+1][game_.x] == '-')
+        return true; // Il giocatore ha perso
+    if (game_.matrix[game_.y+1][game_.x] == '$')
+        game_.points += 10;
+    if (game_.matrix[game_.y+1][game_.x] == '@') {
+        game_.zFuel++;
     }
     return false;
 }

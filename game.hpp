@@ -137,14 +137,13 @@ void processMove(Game &game_, char input) {
     // W/A/S/D (W = up, A = left, S = down, D = right)
     if (input == 'a' || input == 'A')
         game_.x--;
-    if (input == 'd' || input == 'D')
+    else if (input == 'd' || input == 'D')
         game_.x++;
-    if (input == 'w' || input == 'W')
+    else if (input == 'w' || input == 'W')
         game_.y--;
-    if (input == 's' || input == 'S')
+    else if (input == 's' || input == 'S')
         game_.y++;
-
-    if (input == 'z' || input == 'Z') { // Se clicchi 'z' o 'Z'
+    else if (input == 'z' || input == 'Z') { // Se clicchi 'z' o 'Z'
         if (game_.z) { // Se è già in Z...
             if (game_.zFuel > 0) { // Se hai ancora @ da usare
                 game_.z = false; // Passa in modalità z
@@ -154,6 +153,13 @@ void processMove(Game &game_, char input) {
         } else {
             game_.z = true; // Se hai cliccato z mentre stavi in modalità z, esci dalla modalità z
         }
+    } else if (input == ' ') {
+        game_.borderCounter = 0; // Azzera la larghezza del bordo
+    } else if (input == 'q' || input == 'Q') {
+        exit(0); // Termina la partita
+    } else if (input == 'p' || input == 'P') {
+        system("pause >nul"); // Pausa
+        return;
     }
 
     // Effetto pacman verticale

@@ -32,7 +32,10 @@ Color: matrix
 
 ## Game
 - Your pawn is the first letter of your `Username`, in our case it will be `M` from `MyUsername`
-- You can move the pawn inserting `a`/`b` to move up/down ("alto"/"basso"), or `d`/`s` to move right/left ("destra"/"sinistra")
+- You can move the pawn inserting `w`/`s` to move up/down, or `a`/`d` to move right/left
+- You can pause the game with `p`
+- You can quit the game with `q`
+- You can reset the borders with ` `
 - If you touch a `*` or a `-` you lose
 - If you touch a `$` you get `10` extra points
 - If you touch a `@` you get a `z-fuel`, a bonus that you can use as described below

@@ -27,6 +27,7 @@ Game game(std::string name) { // Ritorna l'oggetto Game
     myGame.zFrames = 0;
     myGame.zFuel = 0; // Quante @ devi ancora usare
     srand(time(0)); // Rende casuale la generazione di numeri casuali con rand()
+    // std::ios_base::sync_with_stdio(false); // Rende la console non bloccante
 
     // Informazioni
     while ((std::cout << "Bonus frequency (period): ") && (!(std::cin >> myGame.bonusFrequency))) {

@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cstdlib>
+
 #include "time.h"
+
+#define CLS "\33[2J\33[H"
 
 
 struct Game {
@@ -112,7 +115,7 @@ void updateMatrix(Game &game_) { // Passo per riferimento la variabile di tipo G
 
 
 void printMatrix(Game game_) {
-    system("cls");
+    std::cout << CLS;
     
     // Stampo la matrice
     for (int i = 0; i < 50; i++)
@@ -121,7 +124,7 @@ void printMatrix(Game game_) {
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 50; j++)
             std::cout << game_.matrix[i][j];
-        std::cout << std::endl;
+        std::cout << '\n';
     }
     for (int i = 0; i < 50; i++)
         std::cout << '#';
